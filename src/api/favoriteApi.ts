@@ -8,13 +8,15 @@ const favoriteApi = createApi({
   tagTypes: ["Favorites"],
   endpoints: (builder) => ({
     getFavoriteByUserId: builder.query({
-      query: (userId) =>
+      query: ({ userId, pageNumber, pageSize }) =>
         userId
           ? {
               url: `favorite/get-favoriteBy-userId/${userId}`,
+              params: { pageNumber, pageSize },
             }
           : {
               url: "favorite/get-favoriteBy-userId",
+              params: { pageNumber, pageSize },
             },
       providesTags: ["Favorites"],
     }),
@@ -32,8 +34,7 @@ const favoriteApi = createApi({
   }),
 });
 
-export const {
-  useGetFavoriteByUserIdQuery,
-  useAddRemoveFavoriteMutation,
-} = favoriteApi;
+export const { useGetFavoriteByUserIdQuery, useAddRemoveFavoriteMutation } =
+  favoriteApi;
+
 export default favoriteApi;

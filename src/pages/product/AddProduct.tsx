@@ -191,7 +191,7 @@ export default function AddProduct() {
       id: item.id,
       name: item.name,
       description: item.description,
-      unit: item.unit
+      unit: item.unimmm,
     }));
 
     const payload = {
@@ -232,7 +232,7 @@ export default function AddProduct() {
         setLoading(false);
         navigate("/");
       }
-    }   
+    }
 
     setLoading(false);
   }
