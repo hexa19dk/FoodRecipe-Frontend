@@ -2914,3 +2914,82 @@ table.order-details tbody td {
   border: 1px solid #ddd;
   border-radius: 3px;
 }
+
+/*===== Meal Plan Button Weekly Range =====*/
+
+.date-navigator-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.date-navigator-pill {
+  display: flex;
+  align-items: center;
+  background-color: orange;
+  border-radius: 50px;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.date-nav-button {
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+}
+
+.date-nav-text {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  padding: 0.5rem 0;
+  color: black;
+}
+
+.date-navigator-pill .btn {
+  border: none;
+  background-color: orange;
+  box-shadow: none;
+}
+
+/* .date-navigator-pill .btn:focus,
+.date-navigator-pill .btn:hover {
+  box-shadow: none;
+  background-color: white;
+} */
+
+.date-picker {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 25px;
+  transform: translate(-82px);  
+}
+
+.div-formatted-range {
+  font-weight: bold;
+  font-size: 18px;
+  line-height-step: 21.6px;
+  letter-spacing: 0.07px;
+  display: block;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.dates-button {
+  display: inline-block;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 15px;
+    border: 2px solid #051922;
+    color: #323232;
+    cursor: pointer;
+    padding: 8px 20px;
+    border-radius: 25px;
+}

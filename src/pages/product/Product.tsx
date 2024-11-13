@@ -20,6 +20,8 @@ function Product() {
 		}
 	}, [isLoading]);
 
+	console.log(recipes);
+
 	if (isLoading) {
 		return <Loader />;
 	}

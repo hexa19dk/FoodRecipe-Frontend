@@ -6,7 +6,7 @@ const authApi = createApi({
         baseUrl: "http://localhost:5128/api",
     }),
     endpoints: (builder) => ({
-        registerUser: builder.mutation({            
+        register: builder.mutation({            
             query: (userData) => ({
                 url: "auth/register",
                 method: "POST",
@@ -16,7 +16,7 @@ const authApi = createApi({
                 body: userData
             }),
         }),
-        loginUser: builder.mutation({
+        login: builder.mutation({
             query: (userCredentials) => ({
                 url: "auth/login",
                 method: "POST",
@@ -49,5 +49,5 @@ const authApi = createApi({
     }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useForgotPasswordMutation, useResetPasswordMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useForgotPasswordMutation, useResetPasswordMutation } = authApi;
 export default authApi;

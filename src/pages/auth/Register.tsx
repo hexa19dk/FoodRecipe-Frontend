@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import inputHelper from "../../helper/inputHelper";
-import { useRegisterUserMutation } from "../../api/authApi";
+import { useRegisterMutation } from "../../api/authApi";
 import { Roles } from "../../interfaces/enum";
 import toastNotify from "../../helper/toastNotify";
 import Loader from "../../components/sub-comp/Loader";
@@ -10,7 +10,7 @@ import apiResponse from "../../interfaces/apiResponseModel";
 let bgImg = require("../../img/Food-bg.jpg");
 
 function Register() {
-  const [register] = useRegisterUserMutation();
+  const [register] = useRegisterMutation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
@@ -39,7 +39,7 @@ function Register() {
       toastNotify("Successfully registered!");
       navigate("/login");
     } else if (response.error) {
-      toastNotify(response.error?.data?.errorMessages?.[0] ?? "Registrasi tidak berhasil!", "error");
+      toastNotify("Registrasi tidak berhasil!", "error");
       console.log(response);
     }
 

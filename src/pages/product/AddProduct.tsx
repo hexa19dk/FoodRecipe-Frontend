@@ -10,6 +10,7 @@ import "rsuite/dist/rsuite.min.css";
 import ingredientModel from '../../interfaces/ingredientModel';
 import instructionModel from '../../interfaces/instructionModel';
 import apiResponse from '../../interfaces/apiResponseModel';
+import salmon from '../../img/food-bg-2.webp';
 
 const InstructionData: instructionModel[] = [
   {
@@ -241,7 +242,7 @@ export default function AddProduct() {
     <div>
       <Navbar />
 
-      <div className="breadcrumb-section breadcrumb-bg">
+      <div className="breadcrumb-section" style={{ backgroundImage: `url(${salmon})` }}>
         <div className="container">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 text-center">

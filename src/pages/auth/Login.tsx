@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useLoginUserMutation } from "../../api/authApi";
+import { useLoginMutation } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "../../redux/reducerAction/userAuthSlice";
 
@@ -17,7 +17,7 @@ function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [login] = useLoginUserMutation();
+  const [login] = useLoginMutation();
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState({
     email: "",
@@ -44,7 +44,7 @@ function Login() {
       dispatch(setLoggedInUser({ id, name, email, role }));
       navigate("/");
     } else if (response.error) {
-      toastNotify(response.error?.data?.errorMessages?.[0] ?? "Login gagal, silahkan cek kembali username dan password anda !", "error");
+      toastNotify("Login gagal, silahkan cek kembali username dan password anda !", "error");
       console.log(response);
       // setError(response.error);
     }

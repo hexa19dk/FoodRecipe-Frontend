@@ -7,12 +7,13 @@ import { RootState } from '../../redux/store/storeRedux';
 import { emptyUserState, setLoggedInUser } from "../../redux/reducerAction/userAuthSlice";
 import { Roles } from '../../interfaces/enum';
 import styled from 'styled-components';
-import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/userApi';
+import { useGetFavRecipeByUserIdQuery, useGetUserByIdQuery, useUpdateUserMutation } from '../../api/userApi';
 import { Loader } from '../../components/sub-comp';
 import { Nav, Tab } from 'react-bootstrap';
 import inputHelper from '../../helper/inputHelper';
 import toastNotify from '../../helper/toastNotify';
 import apiResponse from '../../interfaces/apiResponseModel';
+import favoriteModel from '../../interfaces/favoriteModel';
 
 let avatarImg = require("../../img/avatar-img.png");
 let logoImg = require("../../img/food-re-logo.png");
@@ -36,15 +37,26 @@ function UserProfile() {
     const [scroll, setScroll] = useState(false);
     const { userId } = useParams();
     const { data, isLoading } = useGetUserByIdQuery(userId);
+    const { data: favoriteRecipes, isLoading: favLoading } = useGetFavRecipeByUserIdQuery(userId);
+    const [updateUser] = useUpdateUserMutation();
     const [userInputs, setUserInputs] = useState(userInputData);
     const [imgUrl, setImgUrl] = useState<any>("");
     const [imgStore, setImgStore] = useState<any>();
     const [loading, setLoading] = useState(false);
-    const [updateUser] = useUpdateUserMutation();
+    const [favRecipes, setFavRecipes] = useState<favoriteModel[]>([]);
 
     const Li = styled.li`
         font-size: 18px
     `;
+
+
+    useEffect(() => {
+        if(!isLoading) {
+            setFavRecipes(favoriteRecipes.result.$values);
+        }
+    }, [favoriteRecipes]);
+
+    console.log(favoriteRecipes);
 
     const userData: userModel = useSelector(
         (state: RootState) => state.userAuthStore
@@ -143,7 +155,7 @@ function UserProfile() {
         if (userId) {
             const response: apiResponse = await updateUser({ data: payload, id: userId });
 
-            if(response.error) {
+            if (response.error) {
                 toastNotify(response.error.data.title, "error");
             } else {
                 toastNotify("Successfully update user", "success");
@@ -206,15 +218,6 @@ function UserProfile() {
                                                         </ul>
                                                     </Li>
                                                 )}
-
-                                                {userData.role == Roles.USER && (
-                                                    <>
-                                                        <Li>
-                                                            <a onClick={() => navigate("/addProduct")}>Create Recipe</a>
-                                                        </Li>
-                                                    </>
-                                                )}
-
                                                 <Li>
                                                     {userData.id && (
                                                         <>
@@ -307,7 +310,7 @@ function UserProfile() {
                                                     <Nav.Link eventKey="second" ><p>Your Collection</p></Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="third" ><p>Saved Recipes</p></Nav.Link>
+                                                    <Nav.Link eventKey="third" ><p>Favorite Recipes</p></Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
                                                     <Nav.Link eventKey="fourth" ><p>Reset Password</p></Nav.Link>
@@ -342,10 +345,10 @@ function UserProfile() {
                                                         </p>
                                                         <p>
                                                             <input type="file" className="form-group" onChange={handleFileChange} />
-                                                            <select aria-label="Default select example" 
-                                                                name="gender" 
-                                                                className="form-group selectUserProfile ml-5" 
-                                                                value={userInputs.gender} 
+                                                            <select aria-label="Default select example"
+                                                                name="gender"
+                                                                className="form-group selectUserProfile ml-5"
+                                                                value={userInputs.gender}
                                                                 onChange={handleUserInput}
                                                             >
                                                                 <option>Select gender</option>
@@ -437,7 +440,7 @@ function UserProfile() {
                                                         </div>
                                                     </div>
                                                     <div className="profile-recipe-card">
-                                                        <img className="card-img-top" src={cardImg} alt="Card image cap" />
+                                                        <img className="card-img-top" src={cardImg} alt="" />
                                                         <div className="card-body">
                                                             <h5
                                                                 className="card-title"
@@ -474,7 +477,43 @@ function UserProfile() {
                                                 </div>
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="third">
-                                                <h2>Saved Recipe</h2>
+                                                <div className="form-title">
+                                                    <h2>Favorite Recipe</h2>
+                                                </div>
+                                                <div className="row">
+                                                    {favRecipes.map((favRecipe: favoriteModel, index: number) => (
+                                                        <div className="profile-recipe-card" style={{ marginBottom: '3rem' }}>
+                                                            <img className="card-img-top" src={favRecipe.imageUrl} alt="Card image cap" />
+                                                            <div className="card-body">
+                                                                <h5
+                                                                    className="card-title"
+                                                                    style={{
+                                                                        textWrap: 'wrap',
+                                                                        overflow: 'hidden',
+                                                                        display: '-webkit-box', 
+                                                                        WebkitBoxOrient: "vertical",
+                                                                        height: 'fit-content'
+                                                                    }}
+                                                                >
+                                                                    {favRecipe.recipeName}
+                                                                </h5>
+                                                                <span
+                                                                    style={{
+                                                                        overflow: 'hidden',
+                                                                        display: "-webkit-box",
+                                                                        WebkitLineClamp: 4,
+                                                                        WebkitBoxOrient: "vertical",
+                                                                    }}
+                                                                >
+                                                                    <a onClick={() => navigate(`/singleProduct/${favRecipe.recipeId}`)} className="btn btn-primary" style={{ color:'white' }}>
+                                                                        Detail
+                                                                    </a>
+                                                                </span>
+
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="fourth">
                                                 <h2>Reset Password</h2>

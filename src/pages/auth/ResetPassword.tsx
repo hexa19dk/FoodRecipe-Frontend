@@ -42,7 +42,7 @@ function ResetPassword() {
       toastNotify("Your password has been change", "success");
       console.log(response.data);
     } else if (response.error) {
-      toastNotify(response.error?.data?.errorMessages?.[0] ?? "Reset password error", "error");
+      toastNotify("Reset password error", "error");
       console.log(response);
     }
 

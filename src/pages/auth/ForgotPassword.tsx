@@ -31,7 +31,7 @@ function ForgotPassword() {
       toastNotify("Reset password has been sent to your email", "success");
       console.log(response);
     } else if (response.error) {
-      toastNotify(response.error?.data?.errorMessages?.[0] ?? "Reset password email failed to sent", "error");
+      toastNotify(response.error.data, "error");
       console.log(response);
     }
 

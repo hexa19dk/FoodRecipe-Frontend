@@ -17,6 +17,7 @@ import ProductCatalog from './pages/product/ProductCatalog';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import UserProfile from './pages/auth/UserProfile';
+import MealPlanner from './pages/mealPlan/MealPlanner';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ function App() {
           <Route path="/addProduct/:id" element={<AddProduct />} />
           <Route path="/singleProduct/:recipeId" element={<SingleProduct />} />
           <Route path="/productCatalog" element={<ProductCatalog />} />
+
+          <Route path="/mealPlan" element={<MealPlanner />} />
 
           <Route path="/login" element={
             <>
